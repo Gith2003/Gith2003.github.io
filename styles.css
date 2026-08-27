@@ -217,20 +217,28 @@ h1 {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.showcase.is-dragging {
+  cursor: grabbing;
 }
 
 .video-card {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(37vw, 310px);
+  left: 47%;
+  top: 48%;
+  width: min(39vw, 350px);
   aspect-ratio: 16 / 8.8;
   overflow: hidden;
   border: 1px solid rgba(214, 177, 95, .36);
   background: var(--panel);
   box-shadow: var(--shadow), 0 0 26px rgba(123, 63, 242, .26);
   transform: translate(-50%, -50%);
-  transition: transform .7s ease, opacity .7s ease, filter .7s ease;
+  transition: transform .45s ease, opacity .45s ease, filter .45s ease;
+  will-change: transform, opacity;
 }
 
 .video-card video {
@@ -257,6 +265,10 @@ h1 {
 .video-card.is-active {
   border-color: var(--gold-bright);
   filter: saturate(1.12);
+}
+
+.showcase.is-dragging .video-card {
+  transition: none;
 }
 
 .stage-note {
