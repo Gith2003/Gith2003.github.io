@@ -53,7 +53,7 @@ function setActive(next) {
     card.style.opacity = visible ? String(1 - Math.abs(offset) * .13) : "0";
     card.style.pointerEvents = visible ? "auto" : "none";
     card.style.zIndex = String(20 - Math.abs(offset));
-    card.style.transform = `translate(-50%, -50%) translateX(${offset * 72}px) translateY(${offset * -34}px) translateZ(${-Math.abs(offset) * 54}px) rotateY(${offset * -13}deg) rotateZ(${offset * 1.8}deg)`;
+    card.style.transform = `translate(-50%, -50%) translateX(${offset * 46}px) translateY(${offset * -64}px) translateZ(${-Math.abs(offset) * 62}px) rotateY(${offset * -20}deg) rotateZ(${offset * 4}deg)`;
 
     const video = card.querySelector("video");
     if (index === active) video.play().catch(() => {});
