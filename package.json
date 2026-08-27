@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "vite build"
+    "build": "vite build && node scripts/make-sites-dist.mjs"
   },
   "dependencies": {
     "vite": "latest"
