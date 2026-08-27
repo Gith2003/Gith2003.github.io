@@ -22,7 +22,7 @@
       <div class="hero-grid">
         <div class="intro">
           <p class="signal">AI VIDEO LAB / COZE WORKFLOW</p>
-          <h1 id="page-title">AIGC 作品集</h1>
+          <h1 id="page-title"><span>AIGC</span> 作品集</h1>
           <p class="role">AIGC 视频创作者 / 工作流搭建</p>
           <p class="summary">面向 AIGC 岗位展示短视频成片能力、AI 内容生产流程、镜头节奏、商业宣传和剧情类视频执行经验。</p>
           <div class="stats" aria-label="作品数据">
@@ -87,8 +87,17 @@
 
     <section class="contact" id="contact" aria-label="联系信息">
       <p>求职方向：AIGC 内容创作 / AI 视频制作 / 工作流搭建</p>
-      <a href="mailto:your-email@example.com">your-email@example.com</a>
+      <a href="javascript:void(0)" aria-label="微信号chun21051">微信号chun21051</a>
     </section>
+
+    <dialog class="viewer" id="video-viewer" aria-labelledby="viewer-title">
+      <div class="viewer-head">
+        <h2 id="viewer-title">作品预览</h2>
+        <button class="viewer-close" type="button" aria-label="关闭作品预览">关闭</button>
+      </div>
+      <video id="viewer-video" controls playsinline></video>
+      <p id="viewer-desc"></p>
+    </dialog>
   </main>
 
   <script type="module" src="script.js"></script>
