@@ -144,7 +144,10 @@ function openViewer(index) {
   const [title, desc, file] = works[index];
   viewerTitle.textContent = title;
   viewerDesc.textContent = desc;
-  viewerVideo.innerHTML = `<source src="${asset(file, "videos")}" type="video/mp4">`;
+  viewerVideo.pause();
+  viewerVideo.src = asset(file, "videos");
+  viewerVideo.muted = false;
+  viewerVideo.load();
   viewer.showModal();
   viewerVideo.play().catch(() => {});
 }
@@ -152,7 +155,7 @@ function openViewer(index) {
 function closeViewer() {
   viewerVideo.pause();
   viewerVideo.removeAttribute("src");
-  viewerVideo.innerHTML = "";
+  viewerVideo.load();
   viewer.close();
 }
 
