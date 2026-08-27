@@ -1,4 +1,5 @@
 node_modules/
 dist/
+aigc-portfolio-dist.tar.gz
 screenshot-*.png
 playwright-*.png
