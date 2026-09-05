@@ -91,6 +91,11 @@ a { color: inherit; text-decoration: none; }
 
 .nav-links a:hover { color: var(--gold-bright); }
 
+.nav-links .wechat-nav {
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+
 .hero-grid {
   position: relative;
   z-index: 2;
@@ -999,6 +1004,10 @@ h2 {
   .nav-links {
     gap: 10px;
     font-size: 12px;
+  }
+
+  .nav-links .wechat-nav {
+    font-size: 11px;
   }
 
   .summary {
