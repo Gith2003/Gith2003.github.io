@@ -268,11 +268,12 @@ h1 span {
   position: absolute;
   top: 0;
   left: 0;
-  width: 26px;
-  height: 18px;
-  border-top: 1px solid rgba(243, 215, 133, .78);
-  border-left: 1px solid rgba(181, 140, 255, .72);
-  box-shadow: -3px -3px 12px rgba(181, 140, 255, .16);
+  width: 42px;
+  height: 30px;
+  background:
+    linear-gradient(90deg, rgba(181, 140, 255, .82) 0%, var(--gold-bright) 65%, transparent 100%) left top / 42px 1px no-repeat,
+    linear-gradient(180deg, rgba(181, 140, 255, .82) 0%, var(--gold-bright) 65%, transparent 100%) left top / 1px 30px no-repeat;
+  filter: drop-shadow(0 0 5px rgba(243, 215, 133, .28));
 }
 
 .category-strip span::after {
@@ -280,17 +281,18 @@ h1 span {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 26px;
-  height: 18px;
-  border-right: 1px solid rgba(243, 215, 133, .78);
-  border-bottom: 1px solid rgba(181, 140, 255, .72);
-  box-shadow: 3px 3px 12px rgba(243, 215, 133, .14);
+  width: 42px;
+  height: 30px;
+  background:
+    linear-gradient(270deg, rgba(181, 140, 255, .82) 0%, var(--gold-bright) 65%, transparent 100%) right bottom / 42px 1px no-repeat,
+    linear-gradient(0deg, rgba(181, 140, 255, .82) 0%, var(--gold-bright) 65%, transparent 100%) right bottom / 1px 30px no-repeat;
+  filter: drop-shadow(0 0 5px rgba(243, 215, 133, .28));
   pointer-events: none;
 }
 
 .category-strip span:hover::before,
 .category-strip span:hover::after {
-  border-color: var(--gold-bright);
+  filter: drop-shadow(0 0 7px rgba(243, 215, 133, .44));
 }
 
 .stage {
