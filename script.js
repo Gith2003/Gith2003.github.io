@@ -13,6 +13,8 @@ const works = [
 
 const showcase = document.querySelector("#showcase");
 const grid = document.querySelector("#work-grid");
+const mobileTrack = document.querySelector("#mobile-featured-track");
+const mobileDots = document.querySelector("#mobile-featured-dots");
 const activeIndex = document.querySelector("#active-index");
 const activeTitle = document.querySelector("#active-title");
 const viewer = document.querySelector("#video-viewer");
@@ -26,14 +28,20 @@ let dragOffset = 0;
 let isDragging = false;
 let suppressClick = false;
 let wheelLocked = false;
+const desktopStageQuery = window.matchMedia("(min-width: 769px)");
+const loadedVideos = new Set();
+const VIDEO_BASE_URL = (window.PORTFOLIO_VIDEO_BASE_URL || "assets/videos").replace(/\/$/, "");
 
 function asset(name, type) {
-  return `assets/${type}/${name}.${type === "videos" ? "mp4" : "jpg"}`;
+  if (type === "videos") return `${VIDEO_BASE_URL}/${name}.mp4`;
+  return `assets/${type}/${name}.jpg`;
 }
 
 function render() {
   showcase.innerHTML = "";
   grid.innerHTML = "";
+  mobileTrack.innerHTML = "";
+  mobileDots.innerHTML = "";
 
   works.forEach(([title, desc, file], index) => {
     const card = document.createElement("button");
@@ -41,7 +49,7 @@ function render() {
     card.type = "button";
     card.dataset.title = title;
     card.setAttribute("aria-label", `查看${title}`);
-    card.innerHTML = `<video muted loop playsinline preload="metadata" poster="${asset(file, "posters")}"><source src="${asset(file, "videos")}" type="video/mp4"></video>`;
+    card.innerHTML = `<video muted loop playsinline preload="none" poster="${asset(file, "posters")}"></video>`;
     card.addEventListener("click", () => {
       if (suppressClick) return;
       if (index === active) openViewer(index);
@@ -52,10 +60,37 @@ function render() {
     const item = document.createElement("button");
     item.className = "work";
     item.type = "button";
-    item.innerHTML = `<img src="${asset(file, "posters")}" alt="${title}封面"><div><h3>${title}</h3><p>${desc}</p></div>`;
+    item.innerHTML = `<img src="${asset(file, "posters")}" alt="${title}封面" loading="lazy" decoding="async"><div><h3>${title}</h3><p>${desc}</p></div>`;
     item.addEventListener("click", () => openViewer(index));
     grid.appendChild(item);
+
+    const mobileCard = document.createElement("button");
+    mobileCard.className = "mobile-featured-card";
+    mobileCard.type = "button";
+    mobileCard.setAttribute("aria-label", `播放${title}`);
+    const loading = index === 0 ? "eager" : "lazy";
+    const priority = index === 0 ? ' fetchpriority="high"' : "";
+    mobileCard.innerHTML = `<span class="mobile-featured-media"><img src="${asset(file, "posters")}" alt="${title}封面" loading="${loading}" decoding="async"${priority}><span class="mobile-play" aria-hidden="true">▶</span></span><span class="mobile-featured-copy"><strong>${title}</strong><small>${desc}</small></span>`;
+    mobileCard.addEventListener("click", () => openViewer(index));
+    mobileTrack.appendChild(mobileCard);
+
+    const dot = document.createElement("span");
+    dot.className = "mobile-featured-dot";
+    dot.setAttribute("aria-hidden", "true");
+    mobileDots.appendChild(dot);
   });
+
+  updateMobilePosition(0);
+}
+
+function ensureVideoLoaded(card, index) {
+  const video = card.querySelector("video");
+  if (!loadedVideos.has(index)) {
+    video.src = asset(works[index][2], "videos");
+    video.load();
+    loadedVideos.add(index);
+  }
+  return video;
 }
 
 function setActive(next) {
@@ -83,8 +118,10 @@ function layoutCards() {
     const y = offset * 118;
     card.style.transform = `translate(-50%, -50%) translateX(${x}px) translateY(${y}px) translateZ(${170 - abs * 105}px) rotateY(${offset * -19}deg) rotateZ(${offset * -1.2}deg) scale(${1.08 - abs * .055})`;
 
-    const video = card.querySelector("video");
-    if (index === active && !isDragging && dragOffset === 0) {
+    const video = index === active && desktopStageQuery.matches
+      ? ensureVideoLoaded(card, index)
+      : card.querySelector("video");
+    if (desktopStageQuery.matches && index === active && !isDragging && dragOffset === 0) {
       video.play().catch(() => {});
     } else {
       video.pause();
@@ -98,6 +135,21 @@ function layoutCards() {
 
 render();
 setActive(0);
+
+function updateMobilePosition(index) {
+  [...mobileDots.children].forEach((dot, dotIndex) => {
+    dot.classList.toggle("is-active", dotIndex === index);
+  });
+}
+
+mobileTrack.addEventListener("scroll", () => {
+  const firstCard = mobileTrack.querySelector(".mobile-featured-card");
+  if (!firstCard) return;
+  const step = firstCard.offsetWidth + 14;
+  updateMobilePosition(Math.max(0, Math.min(works.length - 1, Math.round(mobileTrack.scrollLeft / step))));
+}, { passive: true });
+
+desktopStageQuery.addEventListener("change", () => layoutCards());
 
 showcase.addEventListener("pointerdown", (event) => {
   isDragging = true;

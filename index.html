@@ -61,6 +61,15 @@
             <strong id="active-title">AI 漫剧 01</strong>
           </div>
         </div>
+
+        <section class="mobile-featured" aria-labelledby="mobile-featured-title">
+          <div class="mobile-featured-head">
+            <p class="mobile-kicker">MOBILE SHOWCASE</p>
+            <h2 id="mobile-featured-title">精选作品</h2>
+          </div>
+          <div class="mobile-featured-track" id="mobile-featured-track"></div>
+          <div class="mobile-featured-dots" id="mobile-featured-dots" aria-label="精选作品位置"></div>
+        </section>
       </div>
     </section>
 
@@ -94,7 +103,7 @@
         <h2 id="viewer-title">作品预览</h2>
         <button class="viewer-close" type="button" aria-label="关闭作品预览">关闭</button>
       </div>
-      <video id="viewer-video" controls playsinline></video>
+      <video id="viewer-video" controls playsinline preload="metadata"></video>
       <p id="viewer-desc"></p>
     </dialog>
   </main>
