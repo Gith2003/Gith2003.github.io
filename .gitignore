@@ -3,3 +3,5 @@ dist/
 aigc-portfolio-dist.tar.gz
 screenshot-*.png
 playwright-*.png
+aigc-portfolio-mobile-offline.zip
+aigc-portfolio-mobile-offline/
